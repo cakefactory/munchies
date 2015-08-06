@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script>
+  var socket = io.connect('http://localhost:3000')
+  socket.on('connect', function(){
+    socket.emit('adduser', prompt("What's your name?"));
+  });
+
+  $(function(){
+    $('#datasend').click( function() {
+      var message = $('#data').val();
+      $('#data').val('');
+      socket.emit('sendchat', message);
+    });
+
+    $('#data').keypress(function(e) {
+      if(e.which == 13) {
+        $(this).blur();
+        $('#datasend').focus().click();
+      }
+    });
+  });
+</script>
+
