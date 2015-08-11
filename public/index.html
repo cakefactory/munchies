@@ -14,10 +14,10 @@
     $('#rooms').empty();
     $.each(rooms, function(key, value){
       if(value == current_room){
-        $('#rooms').append('<div>'+value+'</div>');
+        $('#rooms').append('<li>'+value+'</li>');
       }else{
-      $('#rooms').append('<div><a href="#" onclick="switchRoom(\''+value+'\')">'+value+'</a></div>');
-      }
+        $('#rooms').append('<li><a href="#" onclick="switchRoom(\''+value+'\')">'+value+'</a></li>');
+      };
     });
   });
 
@@ -38,12 +38,22 @@
         $('#datasend').focus().click();
       }
     });
+
+    $('#diceroll').click(function(){
+      socket.emit('diceRoll');
+    });
+    $('#drawcard').click(function(){
+      socket.emit('drawCard', username, onTime);
+    });
+    $('#playcard').click(function(){
+      socket.emit('playCard', username, onTime);
+    });
   });
 </script>
 
 <div>
   <b> ROOMS </b>
-  <div id="rooms"></div>
+  <ul id="rooms"></ul>
 </div>
 
 <div>
@@ -51,3 +61,11 @@
   <input id="data" style="width:200px;"/>
   <input type="button" id="datasend" value="send"/>
 </div>
+
+<div>
+  <ul>
+    <li><input type="button" id="diceroll" value="Dice roll"/></li>
+    <li><input type="button" id="drawcard" value="Draw card"/></li>
+    <li><input type="button" id="playcard" value="Play card"/></li>
+  </ul>
+</div> 
